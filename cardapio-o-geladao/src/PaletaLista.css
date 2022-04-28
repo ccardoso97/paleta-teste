@@ -113,7 +113,7 @@
   left:-9px;
   top:-9px;
 }
-.PaletaListaItem__bagdeRemover{
+#badge__remover{
   display: flex;
   justify-content: center;
   align-items: center;
