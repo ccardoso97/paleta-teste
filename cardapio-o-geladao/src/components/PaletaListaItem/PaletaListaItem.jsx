@@ -13,16 +13,16 @@ function PaletaListaItem({paleta, quantidadeSelecionada, index, onRemove, onAdd}
     Boolean(canRender) && (
       <span className="PaletaListaItem__badge">
         {' '}
-        {quantidadeSelecionada}{' '}
+        {quantidadeSelecionada || 0}{' '} 
       </span>
     );
   return (
     <div className="PaletaListaItem">
-      {badgeCounter(quantidadeSelecionada, index)}
       <span className="PaletaListaItem__badge">
         {' '}
         {quantidadeSelecionada || 0}{' '}
       </span>
+      {badgeCounter(quantidadeSelecionada, index)}
       <div>
         <div className="PaletaListaItem__titulo">{paleta.titulo}</div>
         <div className="PaletaListaItem__preco">
