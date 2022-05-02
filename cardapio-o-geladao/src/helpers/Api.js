@@ -9,6 +9,6 @@ const PaletaContext = {
     `${PaletaContext.paletaEndpoint()}/delete-paleta/${id}`,
 };
 export const Api = {
-  baseUrl: 'http://localhost:3000/paletas',
+  baseUrl: 'http://localhost:3000/',
   ...PaletaContext,
 };
