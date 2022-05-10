@@ -1,40 +1,67 @@
-import './PaletaListaItem.css';
+import { ActionMode } from "../../constants";
+import "./PaletaListaItem.css";
 
-function PaletaListaItem({paleta, quantidadeSelecionada, index, onRemove, onAdd}) {
-
+function PaletaListaItem({
+  paleta,
+  quantidadeSelecionada,
+  index,
+  onRemove,
+  onAdd,
+  clickItem,
+  mode,
+}) {
   const removeButton = (canRender, index) =>
     Boolean(canRender) && (
-      <button className="Acoes__remover" onClick={() => onRemove(index)}>
+      <button
+        disabled={mode !== ActionMode.NORMAL}
+        className="Acoes__remover"
+        onClick={(e) => {
+          e.stopPropagation();
+          onRemove(index);
+        }}
+      >
         remover
       </button>
     );
 
-  const badgeCounter = (canRender, index) =>
+  const badgeCounter = (canRender) =>
     Boolean(canRender) && (
-      <span className="PaletaListaItem__badge">
-        {' '}
-        {quantidadeSelecionada || 0}{' '} 
-      </span>
+      <span className="PaletaListaItem__badge">{quantidadeSelecionada}</span>
     );
+
+  const badgeAction = (canRender) => {
+    if (canRender)
+      return <span className={`PaletaListaItem__tag ${mode === ActionMode.DELETAR && 'PaletaListaItem__tag--deletar'}`}> {mode} </span>;
+  };
+
   return (
-    <div className="PaletaListaItem">
-      <span className="PaletaListaItem__badge">
-        {' '}
-        {quantidadeSelecionada || 0}{' '}
-      </span>
+    <div
+    className={`
+      PaletaListaItem
+      ${mode !== ActionMode.NORMAL && 'PaletaListaItem--disable'}
+      ${mode === ActionMode.DELETAR && 'PaletaListaItem--deletar'}
+    `}
+      key={`PaletaListaItem-${index}`}
+      onClick={() => clickItem(paleta.id)}
+    >
       {badgeCounter(quantidadeSelecionada, index)}
+      {badgeAction(mode !== ActionMode.NORMAL)}
       <div>
         <div className="PaletaListaItem__titulo">{paleta.titulo}</div>
         <div className="PaletaListaItem__preco">
-          R${paleta.preco.toFixed(2)}
+          R$ {paleta.preco.toFixed(2)}
         </div>
         <div className="PaletaListaItem__descricao">{paleta.descricao}</div>
         <div className="PaletaListaItem__acoes Acoes">
           <button
+            disabled={mode !== ActionMode.NORMAL}
             className={`Acoes__adicionar ${
-              !quantidadeSelecionada && 'Acoes__adicionar--preencher'
+              !quantidadeSelecionada && "Acoes__adicionar--preencher"
             }`}
-            onClick={() => onAdd(index)}
+            onClick={(e) => {
+              e.stopPropagation();
+              onAdd(index);
+            }}
           >
             adicionar
           </button>
